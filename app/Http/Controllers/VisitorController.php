@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Visitor;
 use Illuminate\Http\Request;
 
@@ -56,22 +55,27 @@ class VisitorController extends Controller
     public function update(Request $request, Visitor $visitor)
     {
         $validated = $request->validate([
+            'id' => 'required|integer|min:1|unique:visitors,id,' . $visitor->id,
             'name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'position' => 'required|string|max:255',
             'created_at' => 'nullable|date',
         ]);
 
+        // Update Visitor ID
+        $visitor->id = $validated['id'];
+
         // Update visitor information
         $visitor->name = $validated['name'];
         $visitor->address = $validated['address'];
         $visitor->position = $validated['position'];
 
-        // Update Date Added if a new date was provided
+        // Update Date Added if provided
         if (!empty($validated['created_at'])) {
             $visitor->created_at = $validated['created_at'];
         }
 
+        // Save changes
         $visitor->save();
 
         return redirect()->route('visitors.index')

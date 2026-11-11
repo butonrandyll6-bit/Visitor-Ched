@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -12,11 +13,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('visitors', function (Blueprint $table) {
+            // Primary Key / Visitor ID
             $table->id();
-            $table->timestamps();
+
+            // Visitor Information
             $table->string('name');
             $table->string('address');
             $table->string('position');
+
+            // Date Added and Date Updated
+            $table->timestamps();
         });
     }
 

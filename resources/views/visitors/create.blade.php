@@ -7,151 +7,167 @@
     <title>Add New Visitor</title>
 
     <style>
-        * {
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-
         body {
-            margin: 0;
-            padding: 35px 15px;
-            background: #f4f6fb;
-            color: #263248;
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            padding: 30px;
         }
 
         .container {
-            max-width: 600px;
+            max-width: 720px;
             margin: auto;
-        }
-
-        .card {
             background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.06);
         }
 
         h1 {
+            color: #243b53;
+            font-size: 42px;
             margin-top: 0;
-            margin-bottom: 8px;
+            margin-bottom: 18px;
         }
 
-        .subtitle {
-            color: #718096;
-            margin-bottom: 25px;
+        p {
+            color: #64748b;
+            font-size: 20px;
+            margin-bottom: 32px;
         }
 
         label {
             display: block;
-            margin-bottom: 8px;
+            margin-top: 24px;
+            margin-bottom: 10px;
             font-weight: bold;
+            font-size: 20px;
+            color: #243b53;
         }
 
         input {
             width: 100%;
-            padding: 13px;
-            margin-bottom: 20px;
-            border: 1px solid #dce1eb;
-            border-radius: 7px;
-            font-size: 14px;
+            padding: 17px;
+            border: 1px solid #d5dce7;
+            border-radius: 9px;
+            box-sizing: border-box;
+            font-size: 17px;
         }
 
         input:focus {
             outline: none;
-            border-color: #3157d5;
+            border-color: #2563eb;
         }
 
-        .error {
-            color: #c62828;
-            font-size: 13px;
-            margin-top: -14px;
-            margin-bottom: 15px;
-        }
-
-        .buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 5px;
-        }
-
-        button, .back-btn {
-            padding: 12px 18px;
+        button, .back {
+            display: inline-block;
+            margin-top: 32px;
+            padding: 16px 23px;
             border: none;
-            border-radius: 7px;
+            border-radius: 9px;
             text-decoration: none;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 17px;
         }
 
         button {
-            background: #3157d5;
+            background: #3155dc;
             color: white;
         }
 
-        .back-btn {
-            background: #e9edf5;
-            color: #263248;
+        button:hover {
+            background: #2445bd;
         }
 
-        @media(max-width: 500px) {
-            .card {
-                padding: 20px;
+        .back {
+            background: #e8edf5;
+            color: #243b53;
+        }
+
+        .error {
+            color: red;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+
+            h1 {
+                font-size: 30px;
             }
         }
     </style>
 </head>
 
 <body>
+
 <div class="container">
-    <div class="card">
-        <h1>Add New Visitor</h1>
-        <p class="subtitle">Enter the visitor's information below.</p>
 
-        <form action="{{ route('visitors.store') }}" method="POST">
-            @csrf
+    <h1>Add New Visitor</h1>
+    <p>Enter the visitor's information below.</p>
 
-            <label for="name">Full Name</label>
-            <input
-                type="text"
-                id="name"
-                name="name"
-                placeholder="Enter full name"
-                value="{{ old('name') }}"
-            >
-            @error('name')
-                <div class="error">{{ $message }}</div>
-            @enderror
+    @if($errors->any())
+        <div class="error">
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
-            <label for="address">Address</label>
-            <input
-                type="text"
-                id="address"
-                name="address"
-                placeholder="Enter address"
-                value="{{ old('address') }}"
-            >
-            @error('address')
-                <div class="error">{{ $message }}</div>
-            @enderror
+    <form action="{{ route('visitors.store') }}" method="POST">
+        @csrf
 
-            <label for="position">Position</label>
-            <input
-                type="text"
-                id="position"
-                name="position"
-                placeholder="Enter position"
-                value="{{ old('position') }}"
-            >
-            @error('position')
-                <div class="error">{{ $message }}</div>
-            @enderror
+        <label for="id">Visitor ID</label>
+        <input
+            type="number"
+            id="id"
+            name="id"
+            placeholder="Enter visitor ID"
+            min="1"
+            value="{{ old('id') }}"
+            required
+        >
 
-            <div class="buttons">
-                <button type="submit">Save Visitor</button>
-                <a href="{{ route('visitors.index') }}" class="back-btn">Back</a>
-            </div>
-        </form>
-    </div>
+        <label for="name">Full Name</label>
+        <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Enter full name"
+            value="{{ old('name') }}"
+            required
+        >
+
+        <label for="address">Address</label>
+        <input
+            type="text"
+            id="address"
+            name="address"
+            placeholder="Enter address"
+            value="{{ old('address') }}"
+            required
+        >
+
+        <label for="position">Position</label>
+        <input
+            type="text"
+            id="position"
+            name="position"
+            placeholder="Enter position"
+            value="{{ old('position') }}"
+            required
+        >
+
+        <button type="submit">Save Visitor</button>
+
+        <a href="{{ route('visitors.index') }}" class="back">Back</a>
+
+    </form>
+
 </div>
+
 </body>
 </html>

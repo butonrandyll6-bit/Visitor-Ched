@@ -87,17 +87,35 @@
         @csrf
         @method('PUT')
 
+        <!-- Editable Visitor ID -->
+       
+
         <label for="name">Full Name</label>
-        <input type="text" id="name" name="name"
-               value="{{ old('name', $visitor->name) }}" required>
+        <input
+            type="text"
+            id="name"
+            name="name"
+            value="{{ old('name', $visitor->name) }}"
+            required
+        >
 
         <label for="address">Address</label>
-        <input type="text" id="address" name="address"
-               value="{{ old('address', $visitor->address) }}" required>
+        <input
+            type="text"
+            id="address"
+            name="address"
+            value="{{ old('address', $visitor->address) }}"
+            required
+        >
 
         <label for="position">Position</label>
-        <input type="text" id="position" name="position"
-               value="{{ old('position', $visitor->position) }}" required>
+        <input
+            type="text"
+            id="position"
+            name="position"
+            value="{{ old('position', $visitor->position) }}"
+            required
+        >
 
         <button type="submit">Update Visitor</button>
 
