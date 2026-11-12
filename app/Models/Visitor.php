@@ -19,10 +19,10 @@ class Visitor extends Model
     protected $keyType = 'int';
 
     protected $fillable = [
-        'id',
+        
         'name',
         'address',
         'position',
-        'created_at',
+        
     ];
 }
